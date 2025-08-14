@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="main-features-layout">
+        <div class="side-image left-image">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="AI Art" />
+        </div>
+        
+        <div class="features-panel left-panel">
+            <h3>Features</h3>
+            <ul>
+                <li>Powered by Gemini AI API</li>
+                <li>Real-time chat responses</li>
+                <li>Modern, responsive UI</li>
+                <li>Secure and private</li>
+            </ul>
+        </div>
+        <div class="chat-container">
+            <div id="chat-box" class="chat-box"></div>
+            <form id="chat-form">
+                <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="features-panel right-panel">
+            <h3>Why Gemini?</h3>
+            <ul>
+                <li>Fast and accurate answers</li>
+                <li>Handles complex queries</li>
+                <li>Easy to use for everyone</li>
+                <li>Continuously improving</li>
+            </ul>
+        </div>
+        <div class="side-image right-image">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="AI Brain" />
+        </div>
+        
+    </div>
+    <div class="cards-row">
+        <div class="feature-card">
+            <h4>Instant Answers</h4>
+            <p>"The best way to predict the future is to create it."</p>
+        </div>
+        <div class="feature-card">
+            <h4>Smart Conversations</h4>
+            <p>"AI is not just a tool, it’s a partner in discovery."</p>
+        </div>
+        <div class="feature-card">
+            <h4>Always Improving</h4>
+            <p>"Learning never exhausts the mind."</p>
+        </div>
+        <div class="feature-card">
+            <h4>Easy to Use</h4>
+            <p>"Simplicity is the ultimate sophistication."</p>
+        </div>
+    </div>
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatBox = document.getElementById('chat-box');
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userInput = document.getElementById('user-input').value;
+            chatBox.innerHTML += `<div class='user'>You: ${userInput}</div>`;
+            document.getElementById('user-input').value = '';
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userInput })
+            });
+            const data = await response.json();
+            chatBox.innerHTML += `<div class='bot'>Gemini: ${data.reply}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    </script>
+    <div class="copyright-footer">
+        &copy; <b>Made by Suraj Bhan Singh</b> <br>
+        <b>All Rights Are Reserved Year : 2025</b>
+    </div>
+</body>
+</html>
